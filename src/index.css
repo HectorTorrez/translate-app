@@ -20,7 +20,7 @@ html {
   background-position: top;
   background-color: black;
   background-repeat: no-repeat;
-  /* background-size: auto; */
+  background-size: auto;
   font-family: "DM Sans", sans-serif;
 }
 
@@ -359,6 +359,12 @@ template {
 
 [hidden] {
   display: none;
+}
+
+@media screen and (min-width: 1280px) {
+  html {
+    background-size: cover;
+  }
 }
 
 /* :root {

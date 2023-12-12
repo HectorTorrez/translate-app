@@ -8,7 +8,7 @@ interface CardProps {
 
 export function Card({ languageList, children, changeLanguage }: CardProps) {
   return (
-    <section className="m-3 bg-primary-ligth rounded-3xl border-secondary-ligth text-secondary-lightest">
+    <section className="m-3 bg-primary-ligth rounded-3xl border-secondary-ligth text-secondary-lightest  xl:w-full">
       <section>
         <article className="flex items-center justify-between border-b border-secondary-ligth py-5 mx-7">
           <ul className="flex items-center gap-5  font-semibold">
