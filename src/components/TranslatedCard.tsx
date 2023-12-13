@@ -64,9 +64,15 @@ export default function TranslatedCard({
           })}
         </section>
         <Button
-          className="border-2 border-secondary-ligth p-2 rounded-xl"
+          className={cn(
+            "border-2 border-secondary-ligth p-2 rounded-xl cursor-pointer",
+            {
+              "opacity-60 cursor-not-allowed": translateResult === "",
+            }
+          )}
           onClick={handleChangeLanguage}
           type="button"
+          disabled={translateResult === ""}
         >
           <ChangeLanguage />
         </Button>
