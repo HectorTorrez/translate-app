@@ -7,6 +7,7 @@ import { Card } from "./Card";
 import { translateApi } from "../api/translateApi";
 import { cn } from "../utils/cn";
 import { Toast } from "./Toast";
+import { textToSpeech } from "../utils/textToSpeech";
 
 interface TranslateCardProps {
   setTranslateResult: (text: string) => void;
@@ -54,6 +55,10 @@ export default function TranslateCard({
     );
     setTranslateResult(response);
   };
+
+  const listenText = () => {
+    textToSpeech(translate, firstLanguage);
+  };
   return (
     <Card>
       <article className="flex items-center gap-10 border-b border-secondary-ligth py-5 mx-7">
@@ -81,7 +86,9 @@ export default function TranslateCard({
           <Button
             className="border-2 border-secondary-ligth p-2 rounded-xl"
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              listenText();
+            }}
           >
             <Sound />
           </Button>

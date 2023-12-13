@@ -5,6 +5,7 @@ import { Card } from "./Card";
 import { ChangeLanguage, Copy, Sound } from "./Icons";
 import { cn } from "../utils/cn";
 import { Toast } from "./Toast";
+import { textToSpeech } from "../utils/textToSpeech";
 
 interface TranslatedCardProps {
   secondLanguage: string;
@@ -23,7 +24,6 @@ export default function TranslatedCard({
 
   const translatedRef = useRef<HTMLParagraphElement>(null);
   const copyTranslated = async () => {
-    console.log("here");
     if (translatedRef.current === null) return;
     try {
       await navigator.clipboard.writeText(translatedRef.current.innerText);
@@ -34,6 +34,10 @@ export default function TranslatedCard({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const listenText = () => {
+    textToSpeech(translateResult, secondLanguage);
   };
   return (
     <Card>
@@ -76,7 +80,9 @@ export default function TranslatedCard({
           <Button
             className="border-2 border-secondary-ligth p-2 rounded-xl"
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              listenText();
+            }}
           >
             <Sound />
           </Button>
