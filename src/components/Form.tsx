@@ -3,9 +3,14 @@ import { useEffect, useState } from "react";
 interface FormProps {
   onHandleChange: (text: string) => void;
   textareaRef: React.RefObject<HTMLTextAreaElement>;
+  translate: string;
 }
 
-export default function Form({ onHandleChange, textareaRef }: FormProps) {
+export default function Form({
+  onHandleChange,
+  textareaRef,
+  translate,
+}: FormProps) {
   const [text, setText] = useState("Hello, how are you?");
 
   const hangleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,7 +28,7 @@ export default function Form({ onHandleChange, textareaRef }: FormProps) {
         ref={textareaRef}
         name="text"
         id="text"
-        value={text}
+        value={translate}
         cols={5}
         rows={10}
         onChange={(e) => {

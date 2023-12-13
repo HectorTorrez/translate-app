@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
 import { Copy, Sound } from "./Icons";
 import Form from "./Form";
@@ -56,6 +56,11 @@ export default function TranslateCard({
     setTranslateResult(response);
   };
 
+  useEffect(() => {
+    if (translate === "") return;
+    handleTranslate();
+  }, []);
+
   const listenText = () => {
     textToSpeech(translate, firstLanguage);
   };
@@ -80,7 +85,11 @@ export default function TranslateCard({
           );
         })}
       </article>
-      <Form onHandleChange={hangleChange} textareaRef={textareaRef} />
+      <Form
+        translate={translate}
+        onHandleChange={hangleChange}
+        textareaRef={textareaRef}
+      />
       <article className="flex justify-between items-center py-5 px-7">
         <div className="flex gap-3">
           <Button
