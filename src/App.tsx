@@ -4,16 +4,48 @@ import { Button } from "./components/Button";
 import { Layout } from "./components/Layout";
 import LogoLayout from "./components/LogoLayout";
 import Form from "./components/Form";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { translateApi } from "./api/translateApi";
 import { cn } from "./utils/cn";
 import { languages } from "./utils/languages";
+import { Toast } from "./components/Toast";
 
 export default function App(): JSX.Element {
   const [translate, setTranslate] = useState("");
   const [firstLanguage, setFirstLanguage] = useState("en");
   const [secondLanguage, setSecondLanguage] = useState("fr");
   const [translateResult, setTranslateResult] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const translatedRef = useRef<HTMLParagraphElement>(null);
+
+  const copyTextarea = async () => {
+    if (textareaRef.current === null) return;
+    try {
+      await navigator.clipboard.writeText(textareaRef.current.value);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
+  const copyTranslated = async () => {
+    console.log("here");
+    if (translatedRef.current === null) return;
+    try {
+      await navigator.clipboard.writeText(translatedRef.current.innerText);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const hangleChange = (text: string) => {
     setTranslate(text);
@@ -57,7 +89,7 @@ export default function App(): JSX.Element {
               );
             })}
           </article>
-          <Form onHandleChange={hangleChange} />
+          <Form onHandleChange={hangleChange} textareaRef={textareaRef} />
           <article className="flex justify-between items-center py-5 px-7">
             <div className="flex gap-3">
               <Button
@@ -68,10 +100,15 @@ export default function App(): JSX.Element {
                 <Sound />
               </Button>
               <Button
-                className="border-2 border-secondary-ligth p-2 rounded-xl"
+                className="relative border-2 border-secondary-ligth p-2 rounded-xl"
                 type="button"
-                onClick={() => {}}
+                onClick={() => {
+                  copyTextarea();
+                }}
               >
+                {isCopied ? (
+                  <Toast text="Copied!" className="absolute -top-9 -right-3 " />
+                ) : null}
                 <Copy />
               </Button>
             </div>
@@ -119,7 +156,10 @@ export default function App(): JSX.Element {
               <ChangeLanguage />
             </Button>
           </article>
-          <p className="w-full h-[218px] bg-inherit px-7 pt-5 ">
+          <p
+            ref={translatedRef}
+            className="w-full h-[218px] bg-inherit px-7 pt-5 "
+          >
             {translateResult}
           </p>
 
@@ -133,10 +173,15 @@ export default function App(): JSX.Element {
                 <Sound />
               </Button>
               <Button
-                className="border-2 border-secondary-ligth p-2 rounded-xl"
+                className="relative border-2 border-secondary-ligth p-2 rounded-xl"
                 type="button"
-                onClick={() => {}}
+                onClick={() => {
+                  copyTranslated();
+                }}
               >
+                {isCopied ? (
+                  <Toast text="Copied!" className="absolute -top-9 -right-3 " />
+                ) : null}
                 <Copy />
               </Button>
             </div>

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 interface FormProps {
   onHandleChange: (text: string) => void;
+  textareaRef: React.RefObject<HTMLTextAreaElement>;
 }
 
-export default function Form({ onHandleChange }: FormProps) {
+export default function Form({ onHandleChange, textareaRef }: FormProps) {
   const [text, setText] = useState("Hello, how are you?");
 
   const hangleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -19,6 +20,7 @@ export default function Form({ onHandleChange }: FormProps) {
     <form>
       <textarea
         className="w-full bg-inherit px-7 pt-5  "
+        ref={textareaRef}
         name="text"
         id="text"
         value={text}
