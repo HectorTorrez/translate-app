@@ -4,18 +4,24 @@ interface FormProps {
   onHandleChange: (text: string) => void;
   textareaRef: React.RefObject<HTMLTextAreaElement>;
   translate: string;
+  isChangeLanguage: boolean;
 }
 
 export default function Form({
   onHandleChange,
   textareaRef,
   translate,
+  isChangeLanguage,
 }: FormProps) {
   const [text, setText] = useState("Hello, how are you?");
 
   const hangleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
+
+  useEffect(() => {
+    setText(translate);
+  }, [isChangeLanguage]);
 
   useEffect(() => {
     onHandleChange(text);
@@ -28,7 +34,7 @@ export default function Form({
         ref={textareaRef}
         name="text"
         id="text"
-        value={translate}
+        value={text}
         cols={5}
         rows={10}
         onChange={(e) => {

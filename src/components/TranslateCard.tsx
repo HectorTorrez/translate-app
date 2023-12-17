@@ -13,9 +13,11 @@ interface TranslateCardProps {
   setTranslateResult: (text: string) => void;
   setFirstLanguage: (text: string) => void;
   setTranslate: (text: string) => void;
+  // handleDetectLanguage: () => void;
   firstLanguage: string;
   secondLanguage: string;
   translate: string;
+  isChangeLanguage: boolean;
 }
 
 export default function TranslateCard({
@@ -25,6 +27,7 @@ export default function TranslateCard({
   setFirstLanguage,
   translate,
   setTranslate,
+  isChangeLanguage,
 }: TranslateCardProps) {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -71,13 +74,20 @@ export default function TranslateCard({
           return (
             <Button
               key={language.id}
-              className={cn("bg-secondary-ligh text-secondary", {
-                "bg-secondary-lightest p-2 rounded-lg":
-                  firstLanguage === language.code,
-              })}
+              className={cn(
+                "bg-secondary-ligh text-secondary flex  items-center gap-2 text-center",
+                {
+                  "bg-secondary-lightest p-2 rounded-lg":
+                    firstLanguage === language.code,
+                }
+              )}
               type="button"
+              disabled={language.name === "Detect Language"}
               onClick={() => {
                 setFirstLanguage(language.code);
+                // if (language.name === "Detect Language") {
+                //   handleDetectLanguage();
+                // }
               }}
             >
               {language.name}
@@ -89,6 +99,7 @@ export default function TranslateCard({
         translate={translate}
         onHandleChange={hangleChange}
         textareaRef={textareaRef}
+        isChangeLanguage={isChangeLanguage}
       />
       <article className="flex justify-between items-center py-5 px-7">
         <div className="flex gap-3">

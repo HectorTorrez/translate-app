@@ -6,12 +6,14 @@ import { useState } from "react";
 import TranslateCard from "./components/TranslateCard";
 import TranslatedCard from "./components/TranslatedCard";
 import { translateApi } from "./api/translateApi";
+// import { franc } from "franc-min";
 
 export default function App(): JSX.Element {
   const [translate, setTranslate] = useState("Hello, how are you?");
   const [translateResult, setTranslateResult] = useState("");
   const [firstLanguage, setFirstLanguage] = useState("en");
   const [secondLanguage, setSecondLanguage] = useState("fr");
+  const [isChangeLanguage, setIsChangeLanguage] = useState(false);
 
   const handleChangeLanguage = async () => {
     setFirstLanguage(secondLanguage);
@@ -21,9 +23,18 @@ export default function App(): JSX.Element {
       secondLanguage,
       translateResult
     );
+    if (response === "") return;
     setTranslate(response);
     setTranslateResult(translate);
+    setIsChangeLanguage(!isChangeLanguage);
   };
+
+  // const handleDetectLanguage = () => {
+  //   const langCode = franc(translate);
+
+  //   console.log(source);
+  //   setFirstLanguage(source);
+  // };
 
   return (
     <Layout>
@@ -36,6 +47,8 @@ export default function App(): JSX.Element {
           setFirstLanguage={setFirstLanguage}
           translate={translate}
           setTranslate={setTranslate}
+          isChangeLanguage={isChangeLanguage}
+          // handleDetectLanguage={handleDetectLanguage}
         />
         <TranslatedCard
           secondLanguage={secondLanguage}
