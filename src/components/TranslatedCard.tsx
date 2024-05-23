@@ -41,7 +41,7 @@ export default function TranslatedCard({
   };
   return (
     <Card>
-      <article className="flex items-center justify-between gap-10 border-b border-secondary-ligth py-5 mx-7">
+      <article className="flex items-center justify-between gap-10 border-b border-secondary-ligth py-5 mx-7 flex-wrap">
         <section className="flex gap-10">
           {languages.map((language) => {
             return (

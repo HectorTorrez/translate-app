@@ -69,7 +69,7 @@ export default function TranslateCard({
   };
   return (
     <Card>
-      <article className="flex items-center gap-10 border-b border-secondary-ligth py-5 mx-7">
+      <article className="flex items-center gap-10 border-b border-secondary-ligth py-5 mx-7 flex-wrap">
         {languages.map((language) => {
           return (
             <Button
